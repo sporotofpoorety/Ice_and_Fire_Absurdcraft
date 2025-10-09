@@ -62,7 +62,7 @@ public class IafDragonFlightManager {
                 if (dragon.getDistance(attackTarget.posX, dragon.posY, attackTarget.posZ) < 4 || dragon.getDistance(attackTarget.posX, dragon.posY, attackTarget.posZ) > 30) {
                     setTarget(new Vec3d(attackTarget.posX + dragon.getRNG().nextInt(randomDist) - randomDist / 2, attackTarget.posY + distY, attackTarget.posZ + dragon.getRNG().nextInt(randomDist) - randomDist / 2));
                 }
-                dragon.stimulateFire(attackTarget.posX, attackTarget.posY, attackTarget.posZ, 3);
+                dragon.scheduleDragonBreathBurn(attackTarget.posX, attackTarget.posY, attackTarget.posZ, 3);
             }
             if (dragon.airAttack == IafDragonAttacks.Air.SCORCH_STREAM && startPreyVec != null && startAttackVec != null) {
                 float distX = (float) (startPreyVec.x - startAttackVec.x);

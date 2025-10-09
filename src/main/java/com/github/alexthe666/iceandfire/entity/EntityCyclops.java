@@ -209,7 +209,7 @@ public class EntityCyclops extends EntityMob implements IAnimatedEntity, IBlackl
             double extraY = raiseUp;
             passenger.setPosition(this.posX + extraX, this.posY + extraY, this.posZ + extraZ);
             if (this.getAnimationTick() == 32) {
-                passenger.attackEntityFrom(DamageSource.causeMobDamage(this), passenger instanceof EntityPlayer ? (float) IceAndFire.CONFIG.cyclopsBiteStrength : passenger instanceof EntityLivingBase ? ((EntityLivingBase) passenger).getMaxHealth() * 2F : (float) this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue() * 2F);
+                passenger.attackEntityFrom(DamageSource.causeMobDamage(this), IceAndFire.CONFIG.cyclopsBiteStrength);
                 passenger.dismountRidingEntity();
             }
         }
@@ -309,7 +309,7 @@ public class EntityCyclops extends EntityMob implements IAnimatedEntity, IBlackl
                         BlockPos pos = new BlockPos(a, b, c);
                         IBlockState state = world.getBlockState(pos);
                         Block block = state.getBlock();
-                        if (state.getMaterial() != Material.AIR && !(block instanceof BlockBush) && !(block instanceof BlockLiquid) && block != Blocks.BEDROCK && (state.getBlock().isLeaves(state, world, pos) || state.getBlock().canSustainLeaves(state, world, pos))) {
+                        if (state.getMaterial() != Material.AIR && !(block instanceof BlockBush) && !(block instanceof BlockLiquid) && block != Blocks.BEDROCK && (state.getBlockHardness(world, pos) <= IceAndFire.CONFIG.cyclopsBlockBreakHardness)) {
                             this.motionX *= 0.6D;
                             this.motionZ *= 0.6D;
                             if (MinecraftForge.EVENT_BUS.post(new GenericGriefEvent(this, a, b, c))) continue;

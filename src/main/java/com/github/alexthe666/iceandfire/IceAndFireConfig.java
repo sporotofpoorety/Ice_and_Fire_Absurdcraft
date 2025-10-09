@@ -44,6 +44,7 @@ public class IceAndFireConfig {
     public int dragonHealth = 500;
     public float lightningDragonHealAmount = 15;
     public int dragonAttackDamage = 17;
+    public int dragonAttackBreathDelay = 10;
     public double dragonAttackDamageFire = 2;
     public double dragonAttackDamageIce = 2.5;
     public double dragonAttackDamageLightning = 3.5;
@@ -73,6 +74,8 @@ public class IceAndFireConfig {
     public boolean spawnGorgons = true;
     public int spawnGorgonsChance = 75;
     public double gorgonMaxHealth = 100D;
+    public float gorgonMeleeDamage = 3F;
+    public float gorgonGazeDamage = 100F;
     public boolean spawnPixies = true;
     public int spawnPixiesChance = 60;
     public int pixieVillageSize = 5;
@@ -86,8 +89,9 @@ public class IceAndFireConfig {
     public int cyclopesSheepSearchLength = 17;
     public double cyclopsMaxHealth = 150;
     public double cyclopsAttackStrength = 15;
-    public double cyclopsBiteStrength = 40;
+    public float cyclopsBiteStrength = 40F;
     public boolean cyclopsGriefing = true;
+    public float cyclopsBlockBreakHardness = 1F;
     public double sirenMaxHealth = 50D;
     public boolean generateSirenIslands = true;
     public boolean sirenShader = true;
@@ -214,6 +218,7 @@ public class IceAndFireConfig {
         this.dragonHealth = config.getInt("Dragon Health", "all", 500, 1, 100000, "Max dragon health. Health is scaled to this");
         this.lightningDragonHealAmount = config.getInt("Lightning Dragon Healing Amount", "all", 15, 0, 100000, "The amount of health lightning dragons heal when they get hit by a lightning bolt.");  
         this.dragonAttackDamage = config.getInt("Dragon Attack Damage", "all", 17, 1, 10000, "Max dragon attack damage. Attack Damage is scaled to this");
+        this.dragonAttackBreathDelay = config.getInt("Dragon Attack Breath Delay", "all", 10, 0, 100, "Normally in Ice and Fire, the breath attack of dragons lands almost instantly and creates wide AoEs, making it unavoidable, this config option can add a delay, in ticks or 1/20ths of a second, between the breath hitting a block and actually dealing damage.");
         this.dragonAttackDamageFire = config.getFloat("Dragon Attack Damage(Fire breath)", "all", 2.0F, 0, 10000, "Damage dealt from a successful fire breath attack. Attack Damage is scaled to by age, so a stage 5 dragon will deal 5x as much as this number");
         this.dragonAttackDamageIce = config.getFloat("Dragon Attack Damage(Ice breath)", "all", 2.5F, 0, 10000, "Damage dealt from a successful ice breath attack. Attack Damage is scaled to by age, so a stage 5 dragon will deal 5x as much as this number");
         this.dragonAttackDamageLightning = config.getFloat("Dragon Attack Damage(Lightning breath)", "all", 3.5F, 0, 10000, "Damage dealt from a successful lightning breath attack. Attack Damage is scaled to by age, so a stage 5 dragon will deal 5x as much as this number");
@@ -252,6 +257,8 @@ public class IceAndFireConfig {
         this.spawnGorgons = config.getBoolean("Spawn Gorgons", "all", true, "True if gorgon temples are allowed to spawn");
         this.spawnGorgonsChance = config.getInt("Spawn Gorgon Chance", "all", 75, 1, 10000, "1 out of this number chance per chunk for generation");
         this.gorgonMaxHealth = config.getFloat("Gorgon Max Health", "all", 100, 1, 10000, "Maximum gorgon health");
+        this.gorgonMeleeDamage = config.getFloat("Gorgon Attack Damage (Melee)", "all", 3, 1, 10000, "Gorgon melee damage");
+        this.gorgonGazeDamage = config.getFloat("Gorgon Attack Damage (Gaze)", "all", 100, 1, 10000, "Gorgon gaze damage");
 
         this.spawnPixies = config.getBoolean("Spawn Pixies", "all", true, "True if pixie villages are allowed to spawn");
         this.spawnPixiesChance = config.getInt("Spawn Pixies Chance", "all", 60, 1, 10000, "1 out of this number chance per chunk for generation");
@@ -271,6 +278,7 @@ public class IceAndFireConfig {
         this.cyclopsAttackStrength = config.getFloat("Cyclops Attack Strength", "all", 15, 1, 10000, "Cyclops attack strength");
         this.cyclopsBiteStrength = config.getFloat("Cyclops Bite Strength", "all", 40, 1, 10000, "Amount of damage done with cyclops bite attack.");
         this.cyclopsGriefing = config.getBoolean("Cyclops Griefing", "all", true, "Whether or not cyclops can break logs or leaves in their way");
+        this.cyclopsBlockBreakHardness = config.getFloat("Cyclops Block Break Hardness", "all", 1, 0, 10000, "Maximum hardness cyclops can break");
 
         this.sirenMaxHealth = config.getFloat("Siren Max Health", "all", 50, 1, 10000, "Maximum siren health");
         this.generateSirenIslands = config.getBoolean("Spawn Sirens", "all", true, "True if siren islands are allowed to spawn");

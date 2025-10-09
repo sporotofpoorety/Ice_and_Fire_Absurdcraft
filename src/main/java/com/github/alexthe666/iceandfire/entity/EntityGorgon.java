@@ -85,9 +85,9 @@ public class EntityGorgon extends EntityMob implements IAnimatedEntity, IVillage
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, new EntityAIRestrictSun(this));
 		this.tasks.addTask(3, new EntityAIFleeSun(this, 1.0D));
-		this.tasks.addTask(3, aiStare = new GorgonAIStare(this, 1.0D, 15.0F));
+//		this.tasks.addTask(3, aiStare = new GorgonAIStare(this, 1.0D, 15.0F));
 		this.tasks.addTask(3, aiMelee = new EntityAIAttackMelee(this, 1.0D, false));
-		this.tasks.addTask(4, new GorgonAIStare(this, 1.0D, 15.0F));
+//		this.tasks.addTask(4, new GorgonAIStare(this, 1.0D, 15.0F));
 		this.tasks.addTask(5, new EntityAIWanderAvoidWater(this, 1.0D) {
 			public boolean shouldExecute() {
 				executionChance = 20;
@@ -120,7 +120,7 @@ public class EntityGorgon extends EntityMob implements IAnimatedEntity, IVillage
 						.canBeTurnedToStone());
 			}
 		}));
-		this.tasks.removeTask(aiMelee);
+//		this.tasks.removeTask(aiMelee);
 	}
 	
 	public void attackEntityWithRangedAttack(EntityLivingBase entity) {
@@ -145,6 +145,7 @@ public class EntityGorgon extends EntityMob implements IAnimatedEntity, IVillage
 	
 	public void setAttackTarget(@Nullable EntityLivingBase living) {
 		super.setAttackTarget(living);
+/*
 		if (living != null && !world.isRemote) {
 			
 			boolean blindness = this.isPotionActive(MobEffects.BLINDNESS) || living.isPotionActive(MobEffects.BLINDNESS) || IsImmune
@@ -158,6 +159,7 @@ public class EntityGorgon extends EntityMob implements IAnimatedEntity, IVillage
 				this.tasks.addTask(3, aiStare);
 			}
 		}
+*/
 	}
 	
 	protected int getExperiencePoints(EntityPlayer player) {
@@ -227,7 +229,7 @@ public class EntityGorgon extends EntityMob implements IAnimatedEntity, IVillage
 					if (this.getAnimationTick() > 10) {
 						if (target instanceof EntityPlayer) {
 							if (!world.isRemote) {
-								target.attackEntityFrom(IceAndFire.gorgon, Integer.MAX_VALUE);
+								target.attackEntityFrom(IceAndFire.gorgon, IceAndFire.CONFIG.gorgonGazeDamage);
 								if (!target.isEntityAlive() && playerStatueCooldown == 0) {
 									EntityStoneStatue statue = new EntityStoneStatue(world);
 									statue.setPositionAndRotation(target.posX, target.posY, target.posZ, target.rotationYaw, target.rotationPitch);
@@ -248,30 +250,35 @@ public class EntityGorgon extends EntityMob implements IAnimatedEntity, IVillage
 							if (target instanceof EntityLiving && !(target instanceof IBlacklistedFromStatues) || !IsImmune
 									.toStone(target) && (target instanceof IBlacklistedFromStatues && ((IBlacklistedFromStatues) target)
 									.canBeTurnedToStone())) {
+
 								StoneEntityProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(target, StoneEntityProperties.class);
 								EntityLiving attackTarget = (EntityLiving) target;
-								if (properties != null && !properties.isStone) {
-									properties.isStone = true;
-									if (world.isRemote) {
-										IceAndFire.NETWORK_WRAPPER.sendToServer(new MessageStoneStatue(attackTarget.getEntityId(), true));
-									} else {
-										IceAndFire.NETWORK_WRAPPER.sendToAll(new MessageStoneStatue(attackTarget.getEntityId(), true));
-									}
-									this.playSound(IafSoundRegistry.GORGON_TURN_STONE, 1, 1);
-									this.setAttackTarget(null);
-								}
+								target.attackEntityFrom(IceAndFire.gorgon, IceAndFire.CONFIG.gorgonGazeDamage);
+
+                                if(!target.isEntityAlive()) {
+								    if (properties != null && !properties.isStone) {
+									    properties.isStone = true;
+									    if (world.isRemote) {
+										    IceAndFire.NETWORK_WRAPPER.sendToServer(new MessageStoneStatue(attackTarget.getEntityId(), true));
+									    } else {
+										    IceAndFire.NETWORK_WRAPPER.sendToAll(new MessageStoneStatue(attackTarget.getEntityId(), true));
+									    }
+									    this.playSound(IafSoundRegistry.GORGON_TURN_STONE, 1, 1);
+									    this.setAttackTarget(null);
+								    }
 								
-								if (attackTarget instanceof EntityDragonBase) {
-									EntityDragonBase dragon = (EntityDragonBase) attackTarget;
-									dragon.setFlying(false);
-									dragon.setHovering(false);
-								}
-								if (attackTarget instanceof EntityHippogryph) {
-									EntityHippogryph dragon = (EntityHippogryph) attackTarget;
-									dragon.setFlying(false);
-									dragon.setHovering(false);
-									dragon.airTarget = null;
-								}
+								    if (attackTarget instanceof EntityDragonBase) {
+									    EntityDragonBase dragon = (EntityDragonBase) attackTarget;
+									    dragon.setFlying(false);
+									    dragon.setHovering(false);
+								    }
+								    if (attackTarget instanceof EntityHippogryph) {
+									    EntityHippogryph dragon = (EntityHippogryph) attackTarget;
+									    dragon.setFlying(false);
+									    dragon.setHovering(false);
+									    dragon.airTarget = null;
+								    }
+                                }
 							}
 						}
 					}
@@ -305,7 +312,7 @@ public class EntityGorgon extends EntityMob implements IAnimatedEntity, IVillage
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(IceAndFire.CONFIG.gorgonMeleeDamage);
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(IceAndFire.CONFIG.gorgonMaxHealth);
 		this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(1.0D);
 	}

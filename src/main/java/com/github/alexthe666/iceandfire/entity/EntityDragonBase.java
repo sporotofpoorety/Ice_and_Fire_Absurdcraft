@@ -1,6 +1,9 @@
 package com.github.alexthe666.iceandfire.entity;
 
+import java.util.ArrayDeque;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 
 import javax.annotation.Nullable;
@@ -1500,6 +1503,7 @@ public abstract class EntityDragonBase extends EntityTameable implements ISyncMo
         if (animationTick > this.getAnimation().getDuration() && !world.isRemote) {
             animationTick = 0;
         }
+        this.processBreathBurns();
     }
 
     @Override
@@ -1999,6 +2003,50 @@ public abstract class EntityDragonBase extends EntityTameable implements ISyncMo
     }
 
     public abstract void stimulateFire(double burnX, double burnY, double burnZ, int syncType);
+
+//Queued dragon breath burn's position and tick
+    public static class QueuedDragonBreathBurn {
+        final double breathBurnX, breathBurnY, breathBurnZ;
+        final int syncType;
+        final int breathBurnTick;
+
+        QueuedDragonBreathBurn(double breathBurnX, double breathBurnY, double breathBurnZ, int syncType, int breathBurnTick) {
+            this.breathBurnX = breathBurnX;
+            this.breathBurnY = breathBurnY;
+            this.breathBurnZ = breathBurnZ;
+            this.syncType = syncType;
+            this.breathBurnTick = breathBurnTick;
+        }
+    }
+
+//Dragon internal deque of queued breath burns
+    protected final Queue<QueuedDragonBreathBurn> queuedDragonBreathBurns = new ArrayDeque<>();
+
+//Schedule a new breath burn
+    public void scheduleDragonBreathBurn(double scheduledX, double scheduledY, double scheduledZ, int syncType) {
+        queuedDragonBreathBurns.add(new QueuedDragonBreathBurn(scheduledX, scheduledY, scheduledZ, syncType, this.ticksExisted + IceAndFire.CONFIG.dragonAttackBreathDelay));
+    }
+
+//Do dragon breath burns if it's the right tick for each
+    protected void processBreathBurns() {
+        if (queuedDragonBreathBurns.isEmpty()) return;
+//Iterator of the queued breath burns
+        Iterator<QueuedDragonBreathBurn> it = queuedDragonBreathBurns.iterator();
+//While still having more burns
+        while (it.hasNext()) {
+//Get next burn and increment iterator there
+            QueuedDragonBreathBurn nextBurn = it.next();
+//If it's that burn's time
+            if(this.ticksExisted >= nextBurn.breathBurnTick) {
+//Execute burn logic at that burn's location, with specified client-server sync type
+                stimulateFire(nextBurn.breathBurnX, nextBurn.breathBurnY, nextBurn.breathBurnZ, nextBurn.syncType);
+//Remove this breath burn and look at next if it exists
+                it.remove();
+            } else { 
+                return;
+            }
+        }
+    }
 
     public void randomizeAttacks() {
         this.airAttack = IafDragonAttacks.Air.values()[getRNG().nextInt(IafDragonAttacks.Air.values().length)];

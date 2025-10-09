@@ -55,7 +55,7 @@ public class MessageDragonSyncFire extends AbstractMessage<MessageDragonSyncFire
             Entity entity = player.world.getEntityByID(message.dragonId);
             if (entity != null && entity instanceof EntityDragonBase) {
                 EntityDragonBase dragon = (EntityDragonBase) entity;
-                dragon.stimulateFire(message.posX, message.posY, message.posZ, message.syncType);
+                dragon.scheduleDragonBreathBurn(message.posX, message.posY, message.posZ, message.syncType);
             }
         }
     }
@@ -66,7 +66,7 @@ public class MessageDragonSyncFire extends AbstractMessage<MessageDragonSyncFire
             Entity entity = player.world.getEntityByID(message.dragonId);
             if (entity != null && entity instanceof EntityDragonBase) {
                 EntityDragonBase dragon = (EntityDragonBase) entity;
-                dragon.stimulateFire(message.posX, message.posY, message.posZ, message.syncType);
+                dragon.scheduleDragonBreathBurn(message.posX, message.posY, message.posZ, message.syncType);
             }
         }
     }

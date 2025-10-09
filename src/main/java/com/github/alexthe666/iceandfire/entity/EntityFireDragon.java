@@ -181,7 +181,7 @@ public class EntityFireDragon extends EntityDragonBase {
                 if (this.ticksExisted % 5 == 0) {
                     this.playSound(IafSoundRegistry.FIREDRAGON_BREATH, 4, 1);
                 }
-                stimulateFire(burningTarget.getX() + 0.5F, burningTarget.getY() + 0.5F, burningTarget.getZ() + 0.5F, 1);
+                scheduleDragonBreathBurn(burningTarget.getX() + 0.5F, burningTarget.getY() + 0.5F, burningTarget.getZ() + 0.5F, 1);
             }
         } else {
             this.setBreathingFire(true);
@@ -200,7 +200,7 @@ public class EntityFireDragon extends EntityDragonBase {
                     if (this.ticksExisted % 5 == 0) {
                         this.playSound(IafSoundRegistry.FIREDRAGON_BREATH, 4, 1);
                     }
-                    stimulateFire(this.posX + distX * this.fireTicks / 40, entity.posY, this.posZ + distZ * this.fireTicks / 40, 1);
+                    scheduleDragonBreathBurn(this.posX + distX * this.fireTicks / 40, entity.posY, this.posZ + distZ * this.fireTicks / 40, 1);
                 }
             } else {
                 this.setBreathingFire(true);
@@ -240,7 +240,7 @@ public class EntityFireDragon extends EntityDragonBase {
                     }
                     RayTraceResult mop = rayTraceRider(controller, 10 * this.getDragonStage(), 1.0F);
                     if (mop != null) {
-                        stimulateFire(mop.hitVec.x, mop.hitVec.y, mop.hitVec.z, 1);
+                        scheduleDragonBreathBurn(mop.hitVec.x, mop.hitVec.y, mop.hitVec.z, 1);
                     }
                 }
             } else {
@@ -293,7 +293,7 @@ public class EntityFireDragon extends EntityDragonBase {
                         if (this.ticksExisted % 5 == 0) {
                             this.playSound(IafSoundRegistry.FIREDRAGON_BREATH, 4, 1);
                         }
-                        stimulateFire(entity.posX, entity.posY, entity.posZ, 1);
+                        scheduleDragonBreathBurn(entity.posX, entity.posY, entity.posZ, 1);
                         if (entity.isDead) {
                             this.setBreathingFire(false);
                             this.randomizeAttacks();

@@ -277,7 +277,7 @@ public class EntityIceDragon extends EntityDragonBase {
                     }
                     RayTraceResult mop = rayTraceRider(controller, 10 * this.getDragonStage(), 1.0F);
                     if (mop != null) {
-                        stimulateFire(mop.hitVec.x, mop.hitVec.y, mop.hitVec.z, 1);
+                        scheduleDragonBreathBurn(mop.hitVec.x, mop.hitVec.y, mop.hitVec.z, 1);
                     }
                 }
             } else {
@@ -334,7 +334,7 @@ public class EntityIceDragon extends EntityDragonBase {
                         if (this.ticksExisted % 5 == 0) {
                             this.playSound(IafSoundRegistry.ICEDRAGON_BREATH, 4, 1);
                         }
-                        stimulateFire(entity.posX, entity.posY, entity.posZ, 1);
+                        scheduleDragonBreathBurn(entity.posX, entity.posY, entity.posZ, 1);
                         if (entity.isDead) {
                             this.setBreathingFire(false);
                             this.usingGroundAttack = true;
@@ -480,7 +480,7 @@ public class EntityIceDragon extends EntityDragonBase {
                 if (this.ticksExisted % 5 == 0) {
                     this.playSound(IafSoundRegistry.ICEDRAGON_BREATH, 4, 1);
                 }
-                stimulateFire(burningTarget.getX(), burningTarget.getY(), burningTarget.getZ(), 1);
+                scheduleDragonBreathBurn(burningTarget.getX(), burningTarget.getY(), burningTarget.getZ(), 1);
             }
         } else {
             this.setBreathingFire(true);
@@ -499,7 +499,7 @@ public class EntityIceDragon extends EntityDragonBase {
                     if (this.ticksExisted % 5 == 0) {
                         this.playSound(IafSoundRegistry.ICEDRAGON_BREATH, 4, 1);
                     }
-                    stimulateFire(this.posX + distX * this.fireTicks / 40, entity.posY, this.posZ + distZ * this.fireTicks / 40, 1);
+                    scheduleDragonBreathBurn(this.posX + distX * this.fireTicks / 40, entity.posY, this.posZ + distZ * this.fireTicks / 40, 1);
                 }
             } else {
                 this.setBreathingFire(true);
