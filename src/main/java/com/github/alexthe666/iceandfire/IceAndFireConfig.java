@@ -44,7 +44,7 @@ public class IceAndFireConfig {
     public int dragonHealth = 500;
     public float lightningDragonHealAmount = 15;
     public int dragonAttackDamage = 17;
-    public int dragonAttackBreathDelay = 10;
+    public int dragonAttackBreathDelay = 20;
     public double dragonAttackDamageFire = 2;
     public double dragonAttackDamageIce = 2.5;
     public double dragonAttackDamageLightning = 3.5;
@@ -75,7 +75,7 @@ public class IceAndFireConfig {
     public int spawnGorgonsChance = 75;
     public double gorgonMaxHealth = 100D;
     public float gorgonMeleeDamage = 3F;
-    public float gorgonGazeDamage = 100F;
+    public float gorgonGazeDamage = 20F;
     public boolean spawnPixies = true;
     public int spawnPixiesChance = 60;
     public int pixieVillageSize = 5;
@@ -218,7 +218,7 @@ public class IceAndFireConfig {
         this.dragonHealth = config.getInt("Dragon Health", "all", 500, 1, 100000, "Max dragon health. Health is scaled to this");
         this.lightningDragonHealAmount = config.getInt("Lightning Dragon Healing Amount", "all", 15, 0, 100000, "The amount of health lightning dragons heal when they get hit by a lightning bolt.");  
         this.dragonAttackDamage = config.getInt("Dragon Attack Damage", "all", 17, 1, 10000, "Max dragon attack damage. Attack Damage is scaled to this");
-        this.dragonAttackBreathDelay = config.getInt("Dragon Attack Breath Delay", "all", 10, 0, 100, "Normally in Ice and Fire, the breath attack of dragons lands almost instantly and creates wide AoEs, making it unavoidable, this config option can add a delay, in ticks or 1/20ths of a second, between the breath hitting a block and actually dealing damage.");
+        this.dragonAttackBreathDelay = config.getInt("Dragon Attack Breath Delay", "all", 20, 0, 100, "Normally in Ice and Fire, the breath attack of dragons lands almost instantly and creates wide AoEs, making it unavoidable, this config option can add a delay, in ticks or 1/20ths of a second, between the breath hitting a block and actually dealing damage.");
         this.dragonAttackDamageFire = config.getFloat("Dragon Attack Damage(Fire breath)", "all", 2.0F, 0, 10000, "Damage dealt from a successful fire breath attack. Attack Damage is scaled to by age, so a stage 5 dragon will deal 5x as much as this number");
         this.dragonAttackDamageIce = config.getFloat("Dragon Attack Damage(Ice breath)", "all", 2.5F, 0, 10000, "Damage dealt from a successful ice breath attack. Attack Damage is scaled to by age, so a stage 5 dragon will deal 5x as much as this number");
         this.dragonAttackDamageLightning = config.getFloat("Dragon Attack Damage(Lightning breath)", "all", 3.5F, 0, 10000, "Damage dealt from a successful lightning breath attack. Attack Damage is scaled to by age, so a stage 5 dragon will deal 5x as much as this number");
@@ -258,7 +258,7 @@ public class IceAndFireConfig {
         this.spawnGorgonsChance = config.getInt("Spawn Gorgon Chance", "all", 75, 1, 10000, "1 out of this number chance per chunk for generation");
         this.gorgonMaxHealth = config.getFloat("Gorgon Max Health", "all", 100, 1, 10000, "Maximum gorgon health");
         this.gorgonMeleeDamage = config.getFloat("Gorgon Attack Damage (Melee)", "all", 3, 1, 10000, "Gorgon melee damage");
-        this.gorgonGazeDamage = config.getFloat("Gorgon Attack Damage (Gaze)", "all", 100, 1, 10000, "Gorgon gaze damage");
+        this.gorgonGazeDamage = config.getFloat("Gorgon Attack Damage (Gaze)", "all", 20, 1, 10000, "Gorgon gaze damage");
 
         this.spawnPixies = config.getBoolean("Spawn Pixies", "all", true, "True if pixie villages are allowed to spawn");
         this.spawnPixiesChance = config.getInt("Spawn Pixies Chance", "all", 60, 1, 10000, "1 out of this number chance per chunk for generation");

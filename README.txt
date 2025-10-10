@@ -1,5 +1,3 @@
-Dragons, Hypogriffs, Pixies, Oh my!
+Forked from Ice and Fire : Rebirth of the Night Edition.
 
-This is the Rebirth of the Night fork of the popular mod, Ice and Fire, posted with author permission.
-
-This mod DOES NOT ACCEPT feature requests! Bug and crash reports are still allowed.
+Mainly aims to improve functionality, configurability and enjoyability of the mobs.
